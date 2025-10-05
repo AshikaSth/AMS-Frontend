@@ -45,7 +45,7 @@ export function useAlbums() {
     }
   };
 
-    const fetchOneAlbum = async () => {
+  const fetchOneAlbum = async () => {
     try {
       const response = await api.get(`/albums/${route.params.id}`); 
       oneAlbum.value = response.data;

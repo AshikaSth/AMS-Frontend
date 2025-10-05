@@ -139,7 +139,7 @@ onMounted(() => {
               :key="album.id"
               class="border rounded-lg shadow-sm overflow-hidden hover:shadow-lg transition transform hover:-translate-y-1"
             >
-            <RouterLink :to="`/album/${album.id}`">
+            <RouterLink :to="{ name: 'AlbumDetail', params: { id: album.id } }">
               <Avatar class="w-full h-40 rounded-t-lg">
                 <AvatarImage v-if="album.cover_art_url" :src="`${BASE_URL}${album.cover_art_url}`" alt="Album Cover" class="object-cover w-full h-full" />
                 <AvatarFallback class="bg-teal-600 text-white text-2xl font-bold flex items-center justify-center h-full">
@@ -173,7 +173,7 @@ onMounted(() => {
               :key="music.id"
               class="flex items-center justify-between p-2 rounded-lg hover:bg-gray-100 border-b border-gray-100 last:border-b-0"
             >
-            <RouterLink :to="`/music/${music.id}`" class="flex items-center space-x-4 min-w-0 flex-1">
+            <RouterLink :to="{ name: 'MusicDetail', params: { id: music.id } }" class="flex items-center space-x-4 min-w-0 flex-1">
               <div class="flex items-center space-x-4 min-w-0 flex-1">
                 <span class="text-sm font-medium text-gray-400 w-4 flex-shrink-0">{{ index + 1 }}</span>
                 <Avatar class="w-10 h-10 rounded-lg shadow-sm bg-pink-100 text-pink-700 text-sm font-bold">

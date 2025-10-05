@@ -105,19 +105,26 @@ onMounted(() => {
             <AvatarFallback>{{ oneMusic?.title[0] }}</AvatarFallback>
           </Avatar>
         </div>
+        
         <div class="text-center min-w-0">
           <div class="text-3xl font-extrabold truncate text-gray-100 mb-1">
             {{ oneMusic?.title || "Unknown Title" }}
           </div>
+          
+         
           <div
             v-for="(name, i) in oneMusic?.artist_names"
             :key="i"
             class="text-lg text-indigo-400 font-medium truncate"
           >
+           <RouterLink :to="{ name: 'ArtistDetail', params: { id: oneMusic.artists?.[0]?.id } }" class="no-underline">
             {{ name }}{{ i < oneMusic.artist_names.length - 1 ? "," : "" }}
+            </RouterLink>
           </div>
+          
           <span v-if="!oneMusic?.artist_names?.length">N/A</span>
         </div>
+        
       </div>
 
       <!-- Progress Bar -->

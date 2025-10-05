@@ -13,6 +13,7 @@ import DashboardMainView from '@/views/DashboardMainView.vue'
 import ProfileView from '@/views/ProfileView.vue'
 import MusicDetailView from '@/views/Details/MusicDetailView.vue'
 import AlbumDetailView from '@/views/Details/AlbumDetailView.vue'
+import ArtistDetailView from '@/views/Details/ArtistDetailView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -54,12 +55,17 @@ const router = createRouter({
           component: ArtistsView,
         },
         {
+          path: '/artists/:id',
+          name: 'ArtistDetail',
+          component: ArtistDetailView,
+        },
+        {
           path: 'albums',
           name: 'albums',
           component: AlbumsView,
         },
         {
-          path: "/album/:id",
+          path: "/albums/:id",
           name: "AlbumDetail",
           component: AlbumDetailView,
         },
@@ -69,7 +75,7 @@ const router = createRouter({
           component: MusicsView,
         },
         {
-          path: "/music/:id",
+          path: "/musics/:id",
           name: "MusicDetail",
           component: MusicDetailView,
         },

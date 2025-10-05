@@ -5,6 +5,7 @@ import { BASE_URL } from '@/api/base_api'
 import { onMounted } from 'vue'
 import { useAlbums } from '@/components/composables/albumFetch'
 import { RouterLink } from 'vue-router'
+import { Router } from 'lucide-vue-next'
 
 const { oneAlbum, fetchOneAlbum } = useAlbums()
 
@@ -65,7 +66,9 @@ onMounted(() => {
     </div> -->
 
     <!-- Artist Info -->
-    <div v-if="oneAlbum" class="px-8 py-2 flex items-center bg-gray-800">
+    <div v-if="oneAlbum" class="px-8 py-2  bg-gray-800">
+      <RouterLink :to="{ name: 'ArtistDetail', params: { id: oneAlbum.artists?.[0]?.id } }" class="no-underline">
+      <div class="flex items-center">
       <Avatar
         v-for="(name, i) in oneAlbum.artist_names"
         :key="i"
@@ -83,6 +86,8 @@ onMounted(() => {
       <span class="text-sm text-gray-400">
         {{ oneAlbum.artist_names?.join(', ') }}
       </span>
+      </div>
+      </RouterLink>
     </div>
 
     <!-- Track List -->

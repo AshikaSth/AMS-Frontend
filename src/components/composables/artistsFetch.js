@@ -1,6 +1,7 @@
 import { computed, ref } from 'vue';
 import { api } from '@/api/base_api';
 import { useToast } from 'vue-toastification'
+import { useRoute } from "vue-router";
 
 export function useArtists() {
   const pagination = ref({ current_page: 1, total_pages: 1 })
@@ -9,6 +10,10 @@ export function useArtists() {
   const toast = useToast()
   const artistsCount = ref(0);
   const myArtists = ref([]);
+  const oneArtist = ref(null);
+  const route = useRoute();
+
+
 
   const fetchAllArtists = async () => {
     try {
@@ -27,6 +32,18 @@ export function useArtists() {
       console.error(err);
     }
   };
+
+  const fetchOneArtist = async () => {
+    try {
+      const response = await api.get(`/artists/${route.params.id}`); 
+      oneArtist.value = response.data;
+      console.log(oneArtist.value);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+
 
 
 const fetchArtists = async (page = 1) => {
@@ -47,5 +64,5 @@ const allArtistCount = computed(() => allArtists.value.length)
 const myArtistCount = computed(() => myArtists.value.length)
 
 
-  return { artists, myArtists,  artistsCount, allArtistCount, myArtistCount, allArtists, fetchAllArtists, fetchArtists , fetchMyArtists};
+  return { artists, myArtists, oneArtist, artistsCount, allArtistCount, myArtistCount, allArtists, fetchAllArtists, fetchArtists , fetchMyArtists, fetchOneArtist  };
 }
