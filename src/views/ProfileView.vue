@@ -10,14 +10,12 @@ import { Play, Pause, Music4, Disc3, Edit, Upload, Star, Router } from 'lucide-v
 import { useAlbums } from '@/components/composables/albumFetch'
 import { useMusics } from '@/components/composables/musicFetch'
 import { useProfile } from '@/components/composables/profileFetch'
-import CreateArtiist from '@/components/CreateArtist.vue'
+import EditProfile from '@/components/EditProfile.vue'
 import { BASE_URL } from '@/api/base_api'
 const toast = useToast()
 const showDialog = ref(false)
 const currentPlaying = ref(null)
 const audio = ref(new Audio())
-const artists = ref([])
-const artistToEdit = ref(null)
 
 // Music play/pause logic
 const playMusic = (music) => {
@@ -34,6 +32,17 @@ const playMusic = (music) => {
 
 const openEditDialog = () => {
   showDialog.value = true
+  console.log("Dialog opened")
+}
+
+const handleProfileSaved = () => {
+  showDialog.value = false
+  fetchProfile()
+  toast.success('Profile updated successfully')
+}
+
+const handleDialogClose = () => {
+  showDialog.value = false
 }
 
 const { albums, fetchAlbums } = useAlbums();
@@ -53,11 +62,11 @@ onMounted(() => {
     <!-- Header -->
     <div class="mb-8 flex items-center justify-between">
       <h1 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">Profile</h1>
-      <RouterLink to="/profile/edit">
+     
         <Button variant="outline" class="flex items-center gap-2 text-indigo-600 border-indigo-400 hover:bg-indigo-50" @click="openEditDialog">
           <Edit class="h-4 w-4" /> Edit Profile
         </Button>
-      </RouterLink>
+     
     </div>
 
     <!-- Profile Card -->
@@ -217,6 +226,12 @@ onMounted(() => {
         </CardContent>
       </Card>
     </div>
+    <EditProfile
+      v-if="showDialog"
+      :artist-to-edit="userprofile"
+      @saved="handleProfileSaved"
+      @close="handleDialogClose"
+    />
   </div>
 </template>
 

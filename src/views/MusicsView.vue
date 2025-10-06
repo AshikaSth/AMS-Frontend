@@ -4,6 +4,8 @@ import { api } from '@/api/base_api';
 import { useToast } from 'vue-toastification';
 import MusicForm from '@/components/MusicForm.vue';
 import DeleteDialog from '@/components/DeleteDialog.vue';
+import { BASE_URL } from '@/api/base_api';
+import { EditIcon } from 'lucide-vue-next';
 const pagination = ref({ current_page: 1, total_pages: 1 })
 
 const toast = useToast();
@@ -60,14 +62,13 @@ onMounted(() => {
     </div>
 
     <div v-if="!musics.length" class="text-center text-gray-500 py-10">
-      There are no albums present.
+      There are no musics present.
     </div>
 
     <table v-else class="w-full bg-white shadow rounded-2xl overflow-hidden">
       <thead class="bg-gray-50">
         <tr>
           <th class="px-4 py-2 text-left">S.N.</th>
-          <th class="px-4 py-2 text-left">ID</th>
           <th class="px-4 py-2 text-left">Title</th>
           <th class="px-4 py-2 text-left">Cover Art</th>
           <th class="px-4 py-2 text-left">Audio</th>
@@ -81,12 +82,11 @@ onMounted(() => {
       <tbody>
         <tr v-for="(music, index) in musics" :key="music.id" class="border-t">
           <td class="px-4 py-2">{{ index + 1 }}.</td>
-          <td class="px-4 py-2">{{ music.id }}</td>
           <td class="px-4 py-2">{{ music.title }}</td>
           <td class="px-4 py-2">
             <img
               v-if="music.cover_art_url"
-              :src="`http://localhost:3000${music.cover_art_url}`"
+              :src="`${BASE_URL}${music.cover_art_url}`"
               :alt="music.title"
               class="w-16 h-16 object-cover rounded"
               @error="() => toast.error(`Failed to load cover art for ${music.title}`)"
@@ -97,7 +97,7 @@ onMounted(() => {
           <td class="px-4 py-2">
             <audio
                 v-if="music.audio_file_url"
-                :src="`http://localhost:3000${music.audio_file_url}`"
+                :src="`${BASE_URL}${music.audio_file_url}`"
                 controls
                 class="w-48"
               >
@@ -127,7 +127,9 @@ onMounted(() => {
             <span v-if="!music.genres?.length">N/A</span>
           </td>
           <td class="px-4 py-2">
-            <button class="text-blue-600 mr-2" @click="openEditDialog(music)">Edit</button>
+            <button class="text-blue-600 mr-2" @click="openEditDialog(music)">
+               <EditIcon />
+            </button>
             <DeleteDialog
               resource-name="Music"
               :delete-url="`musics/${music.id}`"

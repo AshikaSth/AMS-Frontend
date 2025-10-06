@@ -4,6 +4,7 @@ import { api } from '@/api/base_api'
 import { useToast } from 'vue-toastification'
 import DeleteDialog from '@/components/DeleteDialog.vue'
 import AlbumForm from '@/components/AlbumForm.vue'
+import { EditIcon } from 'lucide-vue-next'
 const pagination = ref({ current_page: 1, total_pages: 1 })
 
 const toast = useToast()
@@ -106,7 +107,9 @@ const closeDialog = () => {
               <span v-if="!album.genres?.length">N/A</span>
             </td>
             <td class="px-4 py-2">
-              <button class="text-blue-600 mr-2" @click="openEditDialog(album)">Edit</button>
+              <button class="text-blue-600 mr-2" @click="openEditDialog(album)">
+                 <EditIcon />
+              </button>
               <DeleteDialog
                 resource-name="Album"
                 :delete-url="`albums/${album.id}`"
