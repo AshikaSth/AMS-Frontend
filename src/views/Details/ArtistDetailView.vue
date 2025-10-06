@@ -46,7 +46,7 @@ onMounted(() => {
             class="object-cover"
           />
           <AvatarFallback
-            class="bg-teal-600 text-white text-4xl font-bold flex items-center justify-center"
+            class="bg-teal-600 text-white text-4xl font-bold flex items-center justify-center w-full h-full rounded-full"
           >
             {{ oneArtist.user?.first_name?.[0] || oneArtist.name?.[0] || 'A' }}
           </AvatarFallback>
@@ -83,10 +83,10 @@ onMounted(() => {
             </div>
         </div>
     </div> -->
-    <!-- Artist Content (e.g., Albums, Top Tracks) -->
+    <!-- Albums-->
     <div class="px-8 py-6">
       <h2 class="text-2xl font-semibold mb-4">Top Albums</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      <div v-if="oneArtist?.albums.length" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         <RouterLink
           v-for="album in oneArtist?.albums"
           :key="album.id"
@@ -104,6 +104,7 @@ onMounted(() => {
           </div>
         </RouterLink>
       </div>
+      <div v-else class="text-gray-400">No albums available.</div>
     </div>
 
     <div class="px-8 py-6">
@@ -117,6 +118,7 @@ onMounted(() => {
           {{ genre.name.charAt(0).toUpperCase() + genre.name.slice(1) }}
         </button>
       </div>
+      <div v-else class="text-gray-400">No genres available.</div>
     </div>
   </div>
 </template>

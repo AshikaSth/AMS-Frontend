@@ -56,17 +56,8 @@ onMounted(() => {
       </div>
     </div>
 
-    <!-- Track List Controls -->
-    <!-- <div class="px-8 py-4 flex justify-between items-center bg-gray-800">
-      <button class="bg-green-500 text-white rounded-full w-10 h-10 flex items-center justify-center hover:bg-green-600">
-        ▶
-      </button>
-      <span class="text-xl cursor-pointer">...</span>
-      <span class="text-sm text-gray-400">List</span>
-    </div> -->
-
     <!-- Artist Info -->
-    <div v-if="oneAlbum" class="px-8 py-2  bg-gray-800">
+    <div v-if="oneAlbum?.artist_names" class="px-8 py-2  bg-gray-800">
       <RouterLink :to="{ name: 'ArtistDetail', params: { id: oneAlbum.artists?.[0]?.id } }" class="no-underline">
       <div class="flex items-center">
       <Avatar
@@ -91,7 +82,7 @@ onMounted(() => {
     </div>
 
     <!-- Track List -->
-    <div class="px-8 py-4">
+    <div v-if="oneAlbum?.musics.length" class="px-8 py-4">
       <ul class="space-y-1">
         <RouterLink
           v-for="(music, index) in oneAlbum?.musics"
@@ -119,6 +110,7 @@ onMounted(() => {
         </RouterLink>
       </ul>
     </div>
+    <div v-else class="pt-24 px-8 text-center">No tracks available for this album.</div>
     
   </div>
 </template>

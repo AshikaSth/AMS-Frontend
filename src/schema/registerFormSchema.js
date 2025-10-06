@@ -8,11 +8,27 @@ export const registerFormSchema = z.object({
   password_confirmation: z.string(),
   gender: z.enum(["female", "male", "others"]),
   address: z.string().min(3, "Address is too short"),
-  phone_number: z.string().regex(/^\d{3}-\d{3}-\d{3,4}$/, "Invalid phone number"),
+  phone_number: z.string().regex(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
   dob: z.string().refine((val) => !isNaN(Date.parse(val)), {
     message: "Invalid date of birth",
   }),
-}).refine((data) => data.password === data.password_confirmation, {
-  message: "Passwords do not match",
-  path: ["password_confirmation"],
-})
+}).superRefine((data, ctx) => {
+    // Check for empty password_confirmation first
+    if (!data.password_confirmation) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["password_confirmation"],
+        message: "Password confirmation is required",
+      });
+      return; // stop here if empty
+    }
+
+    // Only check mismatch if password_confirmation exists
+    if (data.password !== data.password_confirmation) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["password_confirmation"],
+        message: "Passwords do not match",
+      });
+    }
+  });

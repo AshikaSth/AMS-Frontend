@@ -11,3 +11,22 @@
       </div>
     </section>
 </template>
+
+<!-- 
+<template>
+  <section className="py-20 px-6 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500">
+      <div className="max-w-4xl mx-auto text-center text-white">
+        <h2 className="text-4xl md:text-5xl font-bold mb-4">
+          Manage Artists, Albums & Songs
+        </h2>
+        <p className="text-lg md:text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+          A simple and powerful system to keep track of your artists, albums, and music collections.
+          Built with modern technology for seamless management.
+        </p>
+        <div class="space-x-4">
+        <RouterLink to="/login" class="px-6 py-3 bg-white text-indigo-700 font-semibold rounded-xl shadow hover:bg-gray-100">Login</RouterLink>
+        <RouterLink to="/register" class="px-6 py-3 bg-indigo-800 font-semibold rounded-xl shadow hover:bg-indigo-900">Register</RouterLink>
+      </div>
+      </div>
+    </section>
+</template> -->

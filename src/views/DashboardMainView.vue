@@ -123,24 +123,22 @@ const countData = computed(() => {
             <h2 class="text-xl font-bold text-white flex items-center gap-2">
               <Zap class="h-5 w-5 text-indigo-600" /> Key Active Users (<span>{{ users.length }}</span>)
             </h2>
-            <RouterLink to="/users"> <Button variant="outline" class="flex items-center gap-1">View All</Button></RouterLink>
+            <RouterLink to="/dashboard/users"><Button variant="outline" class="flex items-center gap-1 text-white bg-gray-900">View All</Button></RouterLink>
             
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <Card v-for="user in users.slice(0, 10)" :key="user.id" class="p-5 text-center flex flex-col items-center border-t-4 border-indigo-500 hover:shadow-lg transition">
+            <Card v-for="user in users.slice(0, 3)" :key="user.id" class="p-5 text-center flex flex-col items-center border-t-4 border-indigo-500 hover:shadow-lg transition">
               <Avatar class="w-16 h-16 ring-2 ring-indigo-300 bg-indigo-500 text-white text-xl font-bold mb-3">
                 <AvatarImage v-if="user.artist?.photo_url" :src="`${BASE_URL}${user.artist.photo_url}`" alt="Profile" />
                 <AvatarFallback>{{ user.first_name[0] + user.last_name[0] }}</AvatarFallback>
               </Avatar>
               <p class="text-lg font-bold text-white truncate w-full mb-1">{{ user.first_name }} {{ user.last_name }}</p>
               <p class="text-sm text-white truncate w-full capitalize mb-3">{{ user.role }}</p>
-              <Button class="w-full flex items-center justify-center gap-1">
-                <Eye class="h-4 w-4" /> Profile
-              </Button>
+
             </Card>
           </div>
         </section>
-        </template>
+        
 
         <!-- All Artists -->
          <section class="mb-12">
@@ -148,23 +146,26 @@ const countData = computed(() => {
             <h2 class="text-xl font-bold text-white flex items-center gap-2">
               <Zap class="h-5 w-5 text-indigo-600" /> All Artists (<span>{{ allArtists.length }}</span>)
             </h2>
-            <RouterLink to="/artists"> <Button variant="outline" class="flex items-center gap-1 text-white bg-gray-900">View All</Button></RouterLink>
+            <RouterLink to="/dashboard/artists"> <Button variant="outline" class="flex items-center gap-1 text-white bg-gray-900">View All</Button></RouterLink>
             
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <Card v-for="artist in allArtists.slice(0, 10)" :key="artist.id" class="p-5 text-center flex flex-col items-center border-t-4 border-indigo-500 hover:shadow-lg transition">
+            <Card v-for="artist in allArtists.slice(0, 3)" :key="artist.id" class="p-5 text-center flex flex-col items-center border-t-4 border-indigo-500 hover:shadow-lg transition">
               <Avatar class="w-16 h-16 ring-2 ring-indigo-300 bg-indigo-500 text-white text-xl font-bold mb-3">
                 <AvatarImage v-if="artist.photo_url" :src="`${BASE_URL}${artist.photo_url}`" alt="Profile" />
                 <AvatarFallback>{{ artist.user.first_name[0] + artist.user.last_name[0] }}</AvatarFallback>
               </Avatar>
               <p class="text-lg font-bold text-white truncate w-full mb-1">{{ artist.user.first_name }} {{ artist.user.last_name }}</p>
               <p class="text-sm text-white truncate w-full capitalize mb-3">{{ artist.user.role }}</p>
-              <Button class="w-full flex items-center justify-center gap-1">
+              
+              <RouterLink :to="`/artists/${artist.id}`" class="w-full flex items-center justify-center gap-1 bg-gray-500 rounded-2xl border border-white hover:bg-gray-700">
                 <Eye class="h-4 w-4" /> Profile
-              </Button>
+              </RouterLink>
+              
             </Card>
           </div>
         </section>
+        </template>
 
       <!-- My Artists -->
         <template v-if="user?.role === 'artist_manager'">
@@ -173,20 +174,22 @@ const countData = computed(() => {
             <h2 class="text-xl font-bold text-white flex items-center gap-2">
               <Zap class="h-5 w-5 text-indigo-600" /> My Artists (<span>{{ myArtists.length }}</span>)
             </h2>
-            <RouterLink to="/artists"> <Button variant="outline" class="flex items-center gap-1">View All</Button></RouterLink>
+            <RouterLink to="/dashboard/artists"> <Button variant="outline" class="flex items-center gap-1  text-white bg-gray-900">View All</Button></RouterLink>
             
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <Card v-for="artist in myArtists.slice(0, 10)" :key="artist.id" class="p-5 text-center flex flex-col items-center border-t-4 border-indigo-500 hover:shadow-lg transition">
+            <Card v-for="artist in myArtists.slice(0, 3)" :key="artist.id" class="p-5 text-center flex flex-col items-center border-t-4 border-indigo-500 hover:shadow-lg transition">
               <Avatar class="w-16 h-16 ring-2 ring-indigo-300 bg-indigo-500 text-white text-xl font-bold mb-3">
                 <AvatarImage v-if="artist.photo_url" :src="`${BASE_URL}${artist.photo_url}`" alt="Profile" />
                 <AvatarFallback>{{ artist.user.first_name[0] + artist.user.last_name[0] }}</AvatarFallback>
               </Avatar>
               <p class="text-lg font-bold text-white truncate w-full mb-1">{{ artist.user.first_name }} {{ artist.user.last_name }}</p>
               <p class="text-sm text-white truncate w-full capitalize mb-3">{{ artist.user.role }}</p>
-              <Button class="w-full flex items-center justify-center gap-1">
+            
+              <RouterLink :to="`/artists/${artist.id}`" class="w-full flex items-center justify-center gap-1 bg-gray-500 rounded-2xl border border-white hover:bg-gray-700">
                 <Eye class="h-4 w-4" /> Profile
-              </Button>
+              </RouterLink>
+             
             </Card>
           </div>
         </section>
@@ -201,13 +204,11 @@ const countData = computed(() => {
                 <h2 class="text-xl font-bold text-white flex items-center gap-2">
                   <Music4 class="h-5 w-5 text-pink-600" /> Recently Added Tracks (<span>{{ allMusicCount }}</span>)
                 </h2>
-                <Button class="flex items-center gap-1 bg-pink-600 hover:bg-pink-700 text-white">
-                  <Upload class="h-4 w-4" /> Upload
-                </Button>
+     
               </div>
               <Card class="p-5 space-y-3">
                 <div v-for="(music, index) in allMusics" :key="music.id" class="flex items-center justify-between p-2 hover:bg-gray-500 border-b border-gray-100 last:border-b-0">
-                  <div class="flex items-center space-x-4 min-w-0 flex-1">
+                  <RouterLink :to="{ name: 'MusicDetail', params: { id: music?.id } }" class="flex items-center space-x-4 min-w-0 flex-1">
                     <span class="text-sm font-medium text-white w-4 flex-shrink-0">{{ index + 1 }}</span>
                     <Avatar class="w-10 h-10 rounded-lg shadow-sm bg-pink-100 text-pink-700 text-sm font-bold">
                      <AvatarImage v-if="music.cover_art_url" :src="`${BASE_URL}${music.cover_art_url}`" />
@@ -219,7 +220,7 @@ const countData = computed(() => {
                         {{ music.artist_names?.join(', ') || 'N/A' }} - <span class="text-xs text-white">{{ music.album?.name || 'N/A' }}</span>
                       </p>
                     </div>
-                  </div>
+                  </RouterLink>
                   <div class="flex items-center space-x-4 flex-shrink-0">
                     <Button
                       class="p-2 rounded-full"
@@ -241,15 +242,13 @@ const countData = computed(() => {
             <section>
               <div class="flex items-center justify-between mb-4">
                 <h2 class="text-xl font-bold text-white flex items-center gap-2">
-                  <Mic class="h-5 w-5 text-green-600" /> Top Artists (<span>{{ allArtistCount }}</span>)
+                  <Mic class="h-5 w-5 text-green-600" /> Artists (<span>{{ allArtistCount }}</span>)
                 </h2>
-                <Button variant="outline" class="flex items-center gap-1 text-green-600 border-green-400 hover:bg-green-50">
-                  View All
-                </Button>
+               
               </div>
               <Card class="p-5 space-y-4">
-                <div v-for="artist in allArtists.slice(0, 6)" :key="artist.id" class="flex items-center justify-between py-2 border-b border-gray-100 last:border-b-0 hover:bg-gray-700 rounded-md px-1 -mx-1">
-                  <div class="flex items-center space-x-3 min-w-0">
+                <div v-for="artist in allArtists" :key="artist.id" class="flex items-center justify-between py-2 border-b border-gray-100 last:border-b-0 hover:bg-gray-700 rounded-md px-1 -mx-1">
+                  <RouterLink :to="{ name: 'ArtistDetail', params: { id: artist?.id } }" class="flex items-center space-x-4 min-w-0 flex-1">
                     <Avatar class="w-8 h-8 bg-green-500 text-white text-xs font-bold">
                       <AvatarImage v-if="artist.photo_url" :src="`${BASE_URL}${artist.photo_url}`" />
                       <AvatarFallback>{{ artist.user.first_name[0] }}</AvatarFallback>
@@ -258,7 +257,7 @@ const countData = computed(() => {
                       <p class="text-sm font-medium text-white truncate">{{ artist.user.first_name }} {{ artist.user.last_name }}</p>
                       <p class="text-xs text-gray-500 truncate">{{ artist.bio || 'N/A' }}</p>
                     </div>
-                  </div>
+                  </RouterLink>
                   <div class="flex items-center space-x-2 flex-shrink-0">
                     <Activity class="h-4 w-4 text-green-400" />
                   </div>
@@ -272,13 +271,10 @@ const countData = computed(() => {
                 <h2 class="text-xl font-bold text-white flex items-center gap-2">
                   <Disc3 class="h-5 w-5 text-teal-600" /> Recent Albums (<span>{{ allAlbumCount }}</span>)
                 </h2>
-                <Button variant="outline" class="flex items-center gap-1 text-teal-600 border-teal-400 hover:bg-teal-50">
-                  View All
-                </Button>
               </div>
               <Card class="p-5 space-y-4">
                 <div v-for="album in allAlbums" :key="album.id" class="flex items-center justify-between py-2 border-b border-gray-100 last:border-b-0 hover:bg-gray-700 rounded-md px-1 -mx-1">
-                  <div class="flex items-center space-x-3 min-w-0">
+                  <RouterLink :to="{ name: 'AlbumDetail', params: { id: album?.id } }" class="flex items-center space-x-4 min-w-0 flex-1">
                     <Avatar class="w-8 h-8 rounded-md shadow-sm bg-teal-600 text-white text-xs font-bold">
                       <AvatarImage v-if="album.cover_art_url" :src="`${BASE_URL}${album.cover_art_url}`" />
                       <AvatarFallback>{{ album.name[0] }}</AvatarFallback>
@@ -289,7 +285,7 @@ const countData = computed(() => {
                       <p class="text-xs text-gray-500 truncate">{{ name || 'Various' }}</p>
                       </div>
                     </div>
-                  </div>
+                  </RouterLink>
                   <div class="flex items-center space-x-2 flex-shrink-0">
                     <span class="text-xs text-gray-500">{{ album.musics?.length || 0 }} Tracks</span>
                     <ListMusic class="h-4 w-4 text-gray-400" />

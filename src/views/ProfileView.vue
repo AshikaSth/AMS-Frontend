@@ -10,13 +10,14 @@ import { Play, Pause, Music4, Disc3, Edit, Upload, Star, Router } from 'lucide-v
 import { useAlbums } from '@/components/composables/albumFetch'
 import { useMusics } from '@/components/composables/musicFetch'
 import { useProfile } from '@/components/composables/profileFetch'
-
+import CreateArtiist from '@/components/CreateArtist.vue'
+import { BASE_URL } from '@/api/base_api'
 const toast = useToast()
 const showDialog = ref(false)
 const currentPlaying = ref(null)
 const audio = ref(new Audio())
-const BASE_URL = 'http://localhost:3000'
-
+const artists = ref([])
+const artistToEdit = ref(null)
 
 // Music play/pause logic
 const playMusic = (music) => {
@@ -65,7 +66,7 @@ onMounted(() => {
         <!-- Avatar -->
         <Avatar class="w-32 h-32 rounded-full ring-2 ring-indigo-300 flex-shrink-0">
           <AvatarImage v-if="userprofile.artist?.photo_url" :src="`${BASE_URL}${userprofile.artist.photo_url}`" alt="Profile" />
-          <AvatarFallback class="bg-indigo-500 text-white text-3xl font-bold">
+          <AvatarFallback class="bg-indigo-500 text-white text-3xl font-bold w-full h-full rounded-lg flex items-center justify-center">
             {{ userprofile.first_name?.charAt(0) || '' }}
           </AvatarFallback>
         </Avatar>
@@ -142,7 +143,7 @@ onMounted(() => {
             <RouterLink :to="{ name: 'AlbumDetail', params: { id: album.id } }">
               <Avatar class="w-full h-40 rounded-t-lg">
                 <AvatarImage v-if="album.cover_art_url" :src="`${BASE_URL}${album.cover_art_url}`" alt="Album Cover" class="object-cover w-full h-full" />
-                <AvatarFallback class="bg-teal-600 text-white text-2xl font-bold flex items-center justify-center h-full">
+                <AvatarFallback class="bg-teal-600 text-white text-2xl font-bold flex items-center justify-center w-full h-full rounded-lg">
                   {{ album.name[0] }}
                 </AvatarFallback>
               </Avatar>
@@ -178,7 +179,7 @@ onMounted(() => {
                 <span class="text-sm font-medium text-gray-400 w-4 flex-shrink-0">{{ index + 1 }}</span>
                 <Avatar class="w-10 h-10 rounded-lg shadow-sm bg-pink-100 text-pink-700 text-sm font-bold">
                   <AvatarImage v-if="music.cover_art_url" :src="`${BASE_URL}${music.cover_art_url}`" alt="Music Cover" />
-                  <AvatarFallback>{{ music.title[0] }}</AvatarFallback>
+                  <AvatarFallback class="bg-indigo-500 text-white text-3xl font-bold w-full h-full rounded-lg flex items-center justify-center">{{ music.title[0] }}</AvatarFallback>
                 </Avatar>
                 <div class="min-w-0">
                   <p class="font-semibold text-gray-900 truncate">{{ music.title }}</p>

@@ -23,28 +23,15 @@ export function useUsers() {
     isLoading.value = true
     error.value = null
     try {
-      // 🔹 Added per_page=20 to get all users (adjust if your API allows more)
       const response = await api.get('users', { params: { page, per_page: 20 } })
-      
-      // 🔹 Debug log to ensure API returns correct data
       console.log('Fetched users:', response.data.users.length, response.data.users)
-
-      // 🔹 Assign users array correctly
       users.value = response.data.users
-
-      // 🔹 Assign pagination info
       pagination.value = response.data.meta
-
-      // 🔹 Assign usersCount from meta.total_entries if exists
       if (response.data.meta && response.data.meta.total_entries !== undefined) {
         usersCount.value = response.data.meta.total_entries
       } 
-
-      // 🔹 Filter managers
       managers.value = users.value.filter(user => user.role === 'artist_manager')
-
     } catch (err) {
-      toast.error('Failed to fetch users and managers.')
       error.value = err
       console.error(err)
     } finally {
@@ -57,12 +44,9 @@ export function useUsers() {
     artistsError.value = null
     try {
       const response = await api.get('users/unassigned_artists')
-      
       console.log('Unassigned Artists:', response.data)
-
       unassignedArtists.value = response.data
     } catch (err) {
-      toast.error('Failed to fetch unassigned artists.')
       artistsError.value = err
       console.error(err)
     } finally {

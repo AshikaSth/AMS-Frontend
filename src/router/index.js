@@ -55,7 +55,7 @@ const router = createRouter({
           component: ArtistsView,
         },
         {
-          path: '/artists/:id',
+          path: 'artists/:id',
           name: 'ArtistDetail',
           component: ArtistDetailView,
         },
@@ -65,7 +65,7 @@ const router = createRouter({
           component: AlbumsView,
         },
         {
-          path: "/albums/:id",
+          path: "albums/:id",
           name: "AlbumDetail",
           component: AlbumDetailView,
         },
@@ -75,7 +75,7 @@ const router = createRouter({
           component: MusicsView,
         },
         {
-          path: "/musics/:id",
+          path: "musics/:id",
           name: "MusicDetail",
           component: MusicDetailView,
         },
